@@ -2,11 +2,11 @@ package com.example.onlinemusicapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.example.onlinemusicapp.Adapter.RecyclerViewAdapter;
 import com.example.onlinemusicapp.Model.Upload;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         uploads = new ArrayList<>();
         progressDialog.setMessage("please wait...");
         progressDialog.show();
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+        databaseReference = FirebaseDatabase.getInstance().getReference("uploads*");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(),uploads);
                 recyclerView.setAdapter(recyclerViewAdapter);
                 recyclerViewAdapter.notifyDataSetChanged();
-
+                progressDialog.dismiss();
             }
 
             @Override

@@ -2,14 +2,15 @@ package com.example.onlinemusicapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.onlinemusicapp.Model.Upload;
@@ -30,9 +31,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @NonNull
-    @androidx.annotation.NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull @androidx.annotation.NonNull ViewGroup viewGroup, int i) {
+    public MyViewHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup viewGroup, int i) {
 
         View view;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @androidx.annotation.NonNull MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@androidx.annotation.NonNull MyViewHolder myViewHolder, int i) {
 
 
         final Upload upload=uploadList.get(i);
@@ -55,6 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Intent intent =new Intent(context, SongsActivity.class);
                 intent.putExtra("songsCategory",upload.getCategory());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
@@ -72,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView imd_book_thumbnail;
         CardView cardView;
 
-        public MyViewHolder(@NonNull @androidx.annotation.NonNull View itemView) {
+        public MyViewHolder(@androidx.annotation.NonNull View itemView) {
             super(itemView);
 
             tv_book_title=itemView.findViewById(R.id.book_title_id);

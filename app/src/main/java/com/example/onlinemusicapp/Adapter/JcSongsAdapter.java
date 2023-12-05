@@ -2,15 +2,15 @@ package com.example.onlinemusicapp.Adapter;
 
 import android.content.Context;
 import android.media.Image;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.Model.Utility;
@@ -31,10 +31,9 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
         this.listener = listener;
     }
 
-    @NonNull
     @androidx.annotation.NonNull
     @Override
-    public JcSongsAdapter.SongAdapterViewHolder onCreateViewHolder(@NonNull @androidx.annotation.NonNull ViewGroup viewGroup, int i) {
+    public JcSongsAdapter.SongAdapterViewHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup viewGroup, int i) {
 
         View view;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -43,7 +42,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @androidx.annotation.NonNull JcSongsAdapter.SongAdapterViewHolder songAdapterViewHolder, int i) {
+    public void onBindViewHolder(@androidx.annotation.NonNull JcSongsAdapter.SongAdapterViewHolder songAdapterViewHolder, int i) {
 
         Getsongs getsongs =arraylistsongs.get(i);
 
@@ -75,7 +74,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
 
         TextView tv_title,tv_artist,tv_duration;
         ImageView iv_play_active;
-        public SongAdapterViewHolder(@NonNull @androidx.annotation.NonNull View itemView) {
+        public SongAdapterViewHolder(@androidx.annotation.NonNull View itemView) {
             super(itemView);
 
             tv_artist=itemView.findViewById(R.id.tv_artist);
