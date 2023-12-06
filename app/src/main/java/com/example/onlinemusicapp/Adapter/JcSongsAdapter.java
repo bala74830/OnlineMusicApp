@@ -6,16 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jean.jcplayer.model.JcAudio;
+import com.example.jean.jcplayer.view.JcPlayerView;
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.Model.Utility;
 import com.example.onlinemusicapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdapterViewHolder>{
@@ -25,10 +29,10 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
     List<Getsongs> arraylistsongs;
     private RecyclerItemClickListener listener;
 
-    public JcSongsAdapter(Context context, List<Getsongs> arraylistsongs, RecyclerItemClickListener listener) {
+    public JcSongsAdapter(Context context, List<Getsongs> arraylistsongs,RecyclerItemClickListener listener) {
         this.context = context;
         this.arraylistsongs = arraylistsongs;
-        this.listener = listener;
+        this.listener=listener;
     }
 
     @androidx.annotation.NonNull
@@ -48,20 +52,31 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
 
         if (getsongs != null){
             if (selectedPosition == i){
-                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context, com.example.jean.jcplayer.R.color.colorPrimary));
+                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context,com.example.jean.jcplayer.R.color.colorPrimary ));
                 songAdapterViewHolder.iv_play_active.setVisibility(View.VISIBLE);
             }else {
-                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context, com.example.jean.jcplayer.R.color.colorPrimaryDark));
+                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.white ));
                 songAdapterViewHolder.iv_play_active.setVisibility(View.INVISIBLE);
             }
         }
 
         songAdapterViewHolder.tv_title.setText(getsongs.getSongTitle());
         songAdapterViewHolder.tv_artist.setText(getsongs.getArtist());
-        String duration = Utility.converDuration(Long.parseLong(getsongs.getSongduration()));
+        String duration = Utility.converDuration(Long.parseLong(getsongs.getsongDuration()));
         songAdapterViewHolder.tv_duration.setText(duration);
-
         songAdapterViewHolder.bind(getsongs, listener);
+//        jcAudios.add(JcAudio.createFromURL(getsongs.getSongTitle(),getsongs.getSonglink()));
+
+//        songAdapterViewHolder.songlayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                jcPlayerView.playAudio(jcAudios.get(selectedPosition));
+//                jcPlayerView.setVisibility(View.VISIBLE);
+//                jcPlayerView.createNotification();
+//            }
+//        });
+
+
 
     }
 
@@ -74,6 +89,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
 
         TextView tv_title,tv_artist,tv_duration;
         ImageView iv_play_active;
+        RelativeLayout songlayout;
         public SongAdapterViewHolder(@androidx.annotation.NonNull View itemView) {
             super(itemView);
 
@@ -81,8 +97,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
             tv_duration=itemView.findViewById(R.id.tv_duration);
             tv_title=itemView.findViewById(R.id.tv_title);
             iv_play_active=itemView.findViewById(R.id.play_active);
-
-
+            songlayout=itemView.findViewById(R.id.song_layout);
         }
 
         public void bind(Getsongs getsongs, RecyclerItemClickListener listener) {

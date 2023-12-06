@@ -2,9 +2,9 @@ package com.example.onlinemusicapp.Model;
 
 public class Getsongs {
 
-    String songscategory,songTitle,artist,album_art,songduration,songlink,mkey;
+    String songscategory,songTitle,artist,album_art,songDuration,songlink,mkey;
 
-    public Getsongs(String songscategory, String songTitle, String artist, String album_art, String songduration, String songlink) {
+    public Getsongs(String songscategory, String songTitle, String artist, String album_art, String songDuration, String songlink) {
 
         if (songTitle.trim().equals("")){
             songTitle="No Title";
@@ -14,14 +14,14 @@ public class Getsongs {
         this.songTitle = songTitle;
         this.artist = artist;
         this.album_art = album_art;
-        this.songduration = songduration;
+        this.songDuration = songDuration;
         this.songlink = songlink;
     }
 
     public Getsongs() {
     }
 
-    public String getSongscategory() {
+    public String getsongscategory() {
         return songscategory;
     }
 
@@ -53,12 +53,12 @@ public class Getsongs {
         this.album_art = album_art;
     }
 
-    public String getSongduration() {
-        return songduration;
+    public String getsongDuration() {
+        return songDuration;
     }
 
-    public void setSongduration(String songduration) {
-        this.songduration = songduration;
+    public void setsongDuration(String songDuration) {
+        this.songDuration = songDuration;
     }
 
     public String getSonglink() {

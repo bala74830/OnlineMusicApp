@@ -32,7 +32,6 @@ public class SongsActivity extends AppCompatActivity {
     List<Getsongs> mupload;
     JcSongsAdapter jcSongsAdapter;
     DatabaseReference databaseReference;
-    ValueEventListener valueEventListener;
     JcPlayerView jcPlayerView;
     ArrayList<JcAudio> jcAudios = new ArrayList<>();
     private int currentindex;
@@ -42,25 +41,25 @@ public class SongsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_songs);
 
-        recyclerView=findViewById(R.id.recyclerview_id);
-        progressBar=findViewById(R.id.progressbarshowsong);
-        jcPlayerView=findViewById(R.id.jcplayer);
+        recyclerView=findViewById(R.id.recyclerview_id2);
+        progressBar=findViewById(R.id.progressbarshowsong2);
+        jcPlayerView=findViewById(R.id.jcplayer2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mupload = new ArrayList<>();
         recyclerView.setAdapter(jcSongsAdapter);
-        jcSongsAdapter = new JcSongsAdapter(getApplicationContext(), mupload, new JcSongsAdapter.RecyclerItemClickListener() {
-            @Override
-            public void onClickListener(Getsongs getsongs, int position) {
-
-                changeselectedsong(position);
-
-                jcPlayerView.playAudio(jcAudios.get(position));
-                jcPlayerView.setVisibility(View.VISIBLE);
-                jcPlayerView.createNotification();
-
-            }
-        });
+//        jcSongsAdapter = new JcSongsAdapter(getApplicationContext(), mupload, new JcSongsAdapter.RecyclerItemClickListener() {
+//            @Override
+//            public void onClickListener(Getsongs getsongs, int position) {
+//
+//                changeselectedsong(position);
+//
+//                jcPlayerView.playAudio(jcAudios.get(position));
+//                jcPlayerView.setVisibility(View.VISIBLE);
+//                jcPlayerView.createNotification();
+//
+//            }
+//        });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -73,13 +72,12 @@ public class SongsActivity extends AppCompatActivity {
                     getsongs.setMkey(dss.getKey());
                     currentindex = 0;
                     final String s = getIntent().getExtras().getString("songsCategory");
-                    if (s.equals(getsongs.getSongscategory())){
+                    if (s.equals(getsongs.getsongscategory())){
                         mupload.add(getsongs);
                         checkin=true;
                         jcAudios.add(JcAudio.createFromURL(getsongs.getSongTitle(),getsongs.getSonglink()));
                     }
                 }
-
                 jcSongsAdapter.setSelectedPosition(0);
                 recyclerView.setAdapter(jcSongsAdapter);
                 jcSongsAdapter.notifyDataSetChanged();

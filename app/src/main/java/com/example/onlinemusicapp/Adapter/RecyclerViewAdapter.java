@@ -54,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(context, SongsActivity.class);
-                intent.putExtra("songsCategory",upload.getCategory());
+                intent.putExtra("songsCategory",upload.getsongscategory());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

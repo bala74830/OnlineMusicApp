@@ -5,6 +5,7 @@
     android:clickable="true"
     android:padding="5dp"
     android:focusable="true"
+    android:id="@+id/song_layout"
     android:background="?android:attr/selectableItemBackground">
     
     <ImageView
