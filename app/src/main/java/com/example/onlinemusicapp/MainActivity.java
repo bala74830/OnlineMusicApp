@@ -2,11 +2,15 @@ package com.example.onlinemusicapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -80,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(jcSongsAdapter);
                 jcSongsAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
-
+                if(checkPermission() == false){
+                    requestPermission();
+                    return;
+                }
                 if (checkin){
                     jcPlayerView.initPlaylist(jcAudios,null);
                 }
@@ -124,5 +131,21 @@ public class MainActivity extends AppCompatActivity {
         jcSongsAdapter.setSelectedPosition(currentindex);
         jcSongsAdapter.notifyItemChanged(currentindex);
 
+    }
+
+    boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(result == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    void requestPermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)){
+            Toast.makeText(MainActivity.this,"READ PERMISSION IS REQUIRED,PLEASE ALLOW FROM SETTINGS",Toast.LENGTH_SHORT).show();
+        }else
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},123);
     }
 }

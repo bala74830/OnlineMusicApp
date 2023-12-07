@@ -1,15 +1,27 @@
 package com.example.onlinemusicapp.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +30,14 @@ import com.example.jean.jcplayer.view.JcPlayerView;
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.Model.Utility;
 import com.example.onlinemusicapp.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +47,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
     Context context;
     List<Getsongs> arraylistsongs;
     private RecyclerItemClickListener listener;
+    StorageReference storageReference,mreference;
 
     public JcSongsAdapter(Context context, List<Getsongs> arraylistsongs,RecyclerItemClickListener listener) {
         this.context = context;
@@ -65,16 +85,29 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
         String duration = Utility.converDuration(Long.parseLong(getsongs.getsongDuration()));
         songAdapterViewHolder.tv_duration.setText(duration);
         songAdapterViewHolder.bind(getsongs, listener);
-//        jcAudios.add(JcAudio.createFromURL(getsongs.getSongTitle(),getsongs.getSonglink()));
 
-//        songAdapterViewHolder.songlayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                jcPlayerView.playAudio(jcAudios.get(selectedPosition));
-//                jcPlayerView.setVisibility(View.VISIBLE);
-//                jcPlayerView.createNotification();
-//            }
-//        });
+        songAdapterViewHolder.downloadsong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                storageReference= FirebaseStorage.getInstance().getReference().child("songs");
+                mreference = storageReference.child(arraylistsongs.get(i).getSongTitle()+".mp3");
+                File localFile  = new File(Environment.getExternalStorageDirectory(), arraylistsongs.get(i).getSongTitle()+".mp3");
+                long ONE_MEGABYTE = 1024 * 1024;
+                mreference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(context, "File downloaded : "+localFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                        Log.d(TAG,"On Success: File Downloaded "+localFile);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Download failed", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
 
 
 
@@ -88,7 +121,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
     public class SongAdapterViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_title,tv_artist,tv_duration;
-        ImageView iv_play_active;
+        ImageView iv_play_active,downloadsong;
         RelativeLayout songlayout;
         public SongAdapterViewHolder(@androidx.annotation.NonNull View itemView) {
             super(itemView);
@@ -98,6 +131,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
             tv_title=itemView.findViewById(R.id.tv_title);
             iv_play_active=itemView.findViewById(R.id.play_active);
             songlayout=itemView.findViewById(R.id.song_layout);
+            downloadsong=itemView.findViewById(R.id.downloadsong);
         }
 
         public void bind(Getsongs getsongs, RecyclerItemClickListener listener) {
@@ -123,5 +157,17 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
 
     public void setSelectedPosition(int selectedPosition) {
         this.selectedPosition = selectedPosition;
+    }
+    public void downloadsong(Context context,String filename,String fileextension,String destinationdirectory,String url){
+
+        DownloadManager downloadManager = (DownloadManager) context.
+                                            getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(context,destinationdirectory,filename+fileextension);
+
+        downloadManager.enqueue(request);
+
     }
 }
