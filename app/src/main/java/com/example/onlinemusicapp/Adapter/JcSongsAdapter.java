@@ -5,7 +5,9 @@ import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Image;
 import android.net.Uri;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jean.jcplayer.model.JcAudio;
 import com.example.jean.jcplayer.view.JcPlayerView;
+import com.example.onlinemusicapp.MainActivity;
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.Model.Utility;
 import com.example.onlinemusicapp.R;

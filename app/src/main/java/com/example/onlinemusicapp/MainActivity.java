@@ -9,13 +9,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.arges.sepan.argmusicplayer.Models.ArgAudio;
+import com.arges.sepan.argmusicplayer.Models.ArgAudioList;
+import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView;
+import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerSmallView;
 import com.example.jean.jcplayer.model.JcAudio;
 import com.example.jean.jcplayer.view.JcPlayerView;
 import com.example.onlinemusicapp.Adapter.JcSongsAdapter;
@@ -38,8 +45,12 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ProgressDialog progressDialog;
     private List<Getsongs> getsongs;
-    JcPlayerView jcPlayerView;
+    //JcPlayerView jcPlayerView;
+    ArgPlayerLargeView musicPlayer;
     ArrayList<JcAudio> jcAudios = new ArrayList<>();
+
+    ArrayList<ArgAudio> argaudios = new ArrayList<>();
+    ArgAudioList myplaylist = new ArgAudioList(true);
     int currentindex;
     Boolean checkin = false;
 
@@ -49,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView=findViewById(R.id.recyclerview_id);
-        jcPlayerView=findViewById(R.id.jcplayer);
+        //jcPlayerView=findViewById(R.id.jcplayer);
+        musicPlayer=findViewById(R.id.argmusicplayer);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         progressDialog = new ProgressDialog(this);
@@ -62,9 +74,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClickListener(Getsongs getsongs, int position) {
                 changeselectedsong(position);
 
-                jcPlayerView.playAudio(jcAudios.get(position));
-                jcPlayerView.setVisibility(View.VISIBLE);
-                jcPlayerView.createNotification();
+//                jcPlayerView.playAudio(jcAudios.get(position));
+//                jcPlayerView.setVisibility(View.VISIBLE);
+//                jcPlayerView.createNotification();
+                musicPlayer.play(argaudios.get(position));
+                musicPlayer.setVisibility(View.VISIBLE);
+                musicPlayer.enableNotification(MainActivity.this);
+                myplaylist.add(argaudios.get(position));
             }
         });
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
@@ -78,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     currentindex=0;
                     getsongs.add(gsongs);
                     checkin=true;
-                    jcAudios.add(JcAudio.createFromURL(gsongs.getSongTitle(),gsongs.getSonglink()));
+                   // jcAudios.add(JcAudio.createFromURL(gsongs.getSongTitle(),gsongs.getSonglink()));
+                    argaudios.add(ArgAudio.createFromURL(gsongs.getArtist(),gsongs.getSongTitle(),gsongs.getSonglink()));
                 }
                 jcSongsAdapter.setSelectedPosition(0);
                 recyclerView.setAdapter(jcSongsAdapter);
@@ -89,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 if (checkin){
-                    jcPlayerView.initPlaylist(jcAudios,null);
+                    //jcPlayerView.initPlaylist(jcAudios,null);
+                    musicPlayer.loadPlaylist(myplaylist);
                 }
                 else {
                     Toast.makeText(MainActivity.this, "there is no songs", Toast.LENGTH_LONG).show();

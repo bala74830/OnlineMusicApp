@@ -24,11 +24,24 @@
 <!--        android:id="@+id/progressbarshowsong"-->
 <!--        android:indeterminate="true"/>-->
 
-    <com.example.jean.jcplayer.view.JcPlayerView
-        android:id="@+id/jcplayer"
+
+
+<!--    <com.example.jean.jcplayer.view.JcPlayerView-->
+<!--        android:id="@+id/jcplayer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:visibility="gone"/>-->
+
+    <com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView
+        android:id="@+id/argmusicplayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
+        android:layout_margin="8dp"
+        android:visibility="gone">
+
+    </com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView>
+
 
 </RelativeLayout>
