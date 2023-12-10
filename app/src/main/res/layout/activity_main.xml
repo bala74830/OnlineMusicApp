@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ru.github.igla.ferriswheel.FerrisWheelView
+        android:id="@+id/ferrisWheelView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:fwv_baseStrokeColor="#FFFFFF"
+        app:fwv_cabinFillColor="#1DB954"
+        app:fwv_cabinLineStrokeColor="#1DB954"
+        app:fwv_cabinsNumber="10"
+        app:fwv_rotateSpeed="30"
+        app:fwv_wheelStrokeColor="#FFFFFF"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,5 +56,16 @@
 
     </com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/offlinebtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/black"
+        android:text="OFFLINE"
+        android:textColor="@color/white"/>
 
 </RelativeLayout>
