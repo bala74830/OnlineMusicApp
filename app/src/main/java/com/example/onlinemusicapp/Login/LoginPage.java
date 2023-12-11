@@ -49,7 +49,7 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
 
         mauth=FirebaseAuth.getInstance();

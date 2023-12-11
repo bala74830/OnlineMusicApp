@@ -8,11 +8,11 @@
         android:startColor="@color/primarydark"
         />
     <stroke
-        android:width="3dp"
+        android:width="0.3dp"
         android:color="@color/white">
     </stroke>
     <corners
-        android:radius="20sp"/>
+        android:radius="15sp"/>
 
 
 </shape>

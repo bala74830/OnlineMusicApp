@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     currentindex=0;
                     getsongs.add(gsongs);
                     checkin=true;
-                   // jcAudios.add(JcAudio.createFromURL(gsongs.getSongTitle(),gsongs.getSonglink()));
+                    //jcAudios.add(JcAudio.createFromURL(gsongs.getSongTitle(),gsongs.getSonglink()));
                     argaudios.add(ArgAudio.createFromURL(gsongs.getArtist(),gsongs.getSongTitle(),gsongs.getSonglink()));
                 }
                 jcSongsAdapter.setSelectedPosition(0);
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 if (checkin){
-                    //jcPlayerView.initPlaylist(jcAudios,null);
+//                    jcPlayerView.initPlaylist(jcAudios,null);
                     musicPlayer.loadPlaylist(myplaylist);
                 }
                 else {

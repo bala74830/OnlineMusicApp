@@ -32,7 +32,6 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        getSupportActionBar().hide();
 
         mauth= FirebaseAuth.getInstance();
         email=findViewById(R.id.reg_mail);
