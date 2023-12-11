@@ -26,6 +26,9 @@
             android:name=".OfflineMusicPlayer.MusicPlayerActivity"
             android:exported="false" />
         <activity
+            android:name=".OnlineMediaPlayer"
+            android:exported="false" />
+        <activity
             android:name=".Login.Registration"
             android:exported="false" />
         <activity
@@ -37,9 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SongsActivity"
-            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />

@@ -1,4 +1,4 @@
-package com.example.onlinemusicapp.OfflineMusicPlayer;
+package com.example.onlinemusicapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,44 +9,45 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.example.onlinemusicapp.R;
+import com.example.onlinemusicapp.Model.Getsongs;
+import com.example.onlinemusicapp.OfflineMusicPlayer.AudioModel;
+import com.example.onlinemusicapp.OfflineMusicPlayer.MusicPlayerActivity;
+import com.example.onlinemusicapp.OfflineMusicPlayer.MyMediaPlayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class MusicPlayerActivity extends AppCompatActivity {
+public class OnlineMediaPlayer extends AppCompatActivity {
 
     TextView titleTv,currentTimeTv,totalTimeTv;
     SeekBar seekBar;
     ImageView pausePlay,nextBtn,previousBtn,musicIcon;
-    ArrayList<AudioModel> songsList;
-    AudioModel currentSong;
+    ArrayList<Getsongs> songsList;
+    Getsongs currentSong;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     int x=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music_player);
+        setContentView(R.layout.activity_online_media_player);
         getSupportActionBar().hide();
 
-
-        titleTv = findViewById(R.id.song_title);
-        currentTimeTv = findViewById(R.id.current_time);
-        totalTimeTv = findViewById(R.id.total_time);
-        seekBar = findViewById(R.id.seek_bar);
-        pausePlay = findViewById(R.id.pause_play);
-        nextBtn = findViewById(R.id.next);
-        previousBtn = findViewById(R.id.previous);
-        musicIcon = findViewById(R.id.music_icon_big);
+        titleTv = findViewById(R.id.song_titleol);
+        currentTimeTv = findViewById(R.id.current_timeol);
+        totalTimeTv = findViewById(R.id.total_timeol);
+        seekBar = findViewById(R.id.seek_barol);
+        pausePlay = findViewById(R.id.pause_playol);
+        nextBtn = findViewById(R.id.nextol);
+        previousBtn = findViewById(R.id.previousol);
+        musicIcon = findViewById(R.id.music_icon_bigol);
 
         titleTv.setSelected(true);
-
-        songsList = (ArrayList<AudioModel>) getIntent().getSerializableExtra("LIST");
+        songsList = (ArrayList<Getsongs>) getIntent().getSerializableExtra("LIST");
 
         setResourcesWithMusic();
 
-        MusicPlayerActivity.this.runOnUiThread(new Runnable() {
+        OnlineMediaPlayer.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(mediaPlayer!=null){
@@ -84,16 +85,14 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     void setResourcesWithMusic(){
         currentSong = songsList.get(MyMediaPlayer.currentIndex);
 
-        titleTv.setText(currentSong.getTitle());
+        titleTv.setText(currentSong.getSongTitle());
 
-        totalTimeTv.setText(convertToMMSS(currentSong.getDuration()));
+        totalTimeTv.setText(convertToMMSS(currentSong.getsongDuration()));
 
         pausePlay.setOnClickListener(v-> pausePlay());
         nextBtn.setOnClickListener(v-> playNextSong());
@@ -109,9 +108,14 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(currentSong.getPath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
+            mediaPlayer.setDataSource(currentSong.getSonglink());
+            mediaPlayer.prepareAsync();
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                }
+            });
             seekBar.setProgress(0);
             seekBar.setMax(mediaPlayer.getDuration());
         } catch (IOException e) {

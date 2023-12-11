@@ -1,6 +1,8 @@
 package com.example.onlinemusicapp.Model;
 
-public class Getsongs {
+import java.io.Serializable;
+
+public class Getsongs implements Serializable {
 
     String songscategory,songTitle,artist,album_art,songDuration,songlink,mkey;
 

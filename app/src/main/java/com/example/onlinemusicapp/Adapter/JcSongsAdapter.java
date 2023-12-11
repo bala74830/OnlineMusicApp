@@ -113,7 +113,6 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
         });
 
 
-
     }
 
     @Override
