@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import ru.github.igla.ferriswheel.FerrisWheelView;
+
 public class Registration extends AppCompatActivity {
 
     FirebaseAuth mauth;
@@ -28,11 +30,12 @@ public class Registration extends AppCompatActivity {
     TextView login_text;
     ImageButton eyetoggle;
     boolean show =true;
+    FerrisWheelView ferrisWheelView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         mauth= FirebaseAuth.getInstance();
         email=findViewById(R.id.reg_mail);
@@ -40,6 +43,7 @@ public class Registration extends AppCompatActivity {
         register_btn=findViewById(R.id.register_btn);
         login_text=findViewById(R.id.login_text);
         eyetoggle=findViewById(R.id.password_toggle2);
+        ferrisWheelView=findViewById(R.id.ferrisWheelView3);
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,17 +113,24 @@ public class Registration extends AppCompatActivity {
             password.setError("Password can not be empty..");
         }
         else{
+            ferrisWheelView.setVisibility(View.VISIBLE);
+            ferrisWheelView.startAnimation();
+            ferrisWheelView.setClickable(false);
             mauth.createUserWithEmailAndPassword(user,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         Toast.makeText(Registration.this, "User registered successfully!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Registration.this,LoginPage.class));
+                        ferrisWheelView.stopAnimation();
+                        ferrisWheelView.setVisibility(View.GONE);
                         finishAffinity();
                     }
                     else
                     {
                         Toast.makeText(Registration.this, "Registration Failed!!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        ferrisWheelView.stopAnimation();
+                        ferrisWheelView.setVisibility(View.GONE);
                     }
                 }
             });

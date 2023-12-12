@@ -7,6 +7,19 @@
     android:background="@color/primarydark"
     tools:context=".Login.Registration">
 
+    <ru.github.igla.ferriswheel.FerrisWheelView
+        android:id="@+id/ferrisWheelView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:fwv_baseStrokeColor="#FFFFFF"
+        app:fwv_cabinFillColor="#1DB954"
+        app:fwv_cabinLineStrokeColor="#1DB954"
+        app:fwv_cabinsNumber="10"
+        app:fwv_rotateSpeed="30"
+        app:fwv_wheelStrokeColor="#FFFFFF"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/register_text"
         android:layout_width="wrap_content"

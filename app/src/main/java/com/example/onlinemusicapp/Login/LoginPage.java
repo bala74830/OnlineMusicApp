@@ -33,6 +33,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import ru.github.igla.ferriswheel.FerrisWheelView;
+
 public class LoginPage extends AppCompatActivity {
 
     FirebaseAuth mauth;
@@ -43,13 +45,14 @@ public class LoginPage extends AppCompatActivity {
     ImageButton eyetoggle;
     boolean show =true;
     LottieAnimationView greendotloader;
+    FerrisWheelView ferrisWheelView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
 
         mauth=FirebaseAuth.getInstance();
@@ -59,6 +62,7 @@ public class LoginPage extends AppCompatActivity {
         reg_text=findViewById(R.id.register_text);
         resetpass=findViewById(R.id.forgetpass);
         eyetoggle=findViewById(R.id.password_toggle);
+        ferrisWheelView=findViewById(R.id.ferrisWheelView2);
         //greendotloader=findViewById(R.id.greendotloader);
 
 
@@ -157,13 +161,29 @@ public class LoginPage extends AppCompatActivity {
 
                     if (task.isSuccessful())
                     {
+                        login_btn.setClickable(false);
+                        reg_text.setClickable(false);
+                        ferrisWheelView.setVisibility(View.VISIBLE);
+                        ferrisWheelView.startAnimation();
+                        ferrisWheelView.setClickable(false);
                         Toast.makeText(LoginPage.this, "Logging in..", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginPage.this,MainActivity.class));
+                        ferrisWheelView.stopAnimation();
+                        ferrisWheelView.setVisibility(View.GONE);
                         finishAffinity();
                     }
                     else
                     {
+                        login_btn.setClickable(false);
+                        reg_text.setClickable(false);
+                        ferrisWheelView.setVisibility(View.VISIBLE);
+                        ferrisWheelView.startAnimation();
+                        ferrisWheelView.setClickable(false);
                         Toast.makeText(LoginPage.this, "Login Failed!!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        ferrisWheelView.stopAnimation();
+                        ferrisWheelView.setVisibility(View.GONE);
+                        login_btn.setClickable(true);
+                        reg_text.setClickable(true);
                     }
                 }
             });
@@ -172,6 +192,11 @@ public class LoginPage extends AppCompatActivity {
 
     public void ResetPassword(){
         //greendotloader.setVisibility(View.VISIBLE);
+        login_btn.setClickable(false);
+        reg_text.setClickable(false);
+        ferrisWheelView.setVisibility(View.VISIBLE);
+        ferrisWheelView.startAnimation();
+        ferrisWheelView.setClickable(false);
         resetpass.setVisibility(View.GONE);
 
         mauth.sendPasswordResetEmail(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -188,6 +213,10 @@ public class LoginPage extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(LoginPage.this, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
                 resetpass.setVisibility(View.VISIBLE);
+                ferrisWheelView.stopAnimation();
+                ferrisWheelView.setVisibility(View.GONE);
+                login_btn.setClickable(true);
+                reg_text.setClickable(true);
             }
         });
         //password.addTextChangedListener(logintextwatcher);

@@ -27,9 +27,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jean.jcplayer.model.JcAudio;
-import com.example.jean.jcplayer.view.JcPlayerView;
-import com.example.onlinemusicapp.MainActivity;
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.Model.Utility;
 import com.example.onlinemusicapp.R;
@@ -75,7 +72,7 @@ public class JcSongsAdapter extends RecyclerView.Adapter<JcSongsAdapter.SongAdap
 
         if (getsongs != null){
             if (selectedPosition == i){
-                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context,com.example.jean.jcplayer.R.color.colorPrimary ));
+                songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.purple_200 ));
                 songAdapterViewHolder.iv_play_active.setVisibility(View.VISIBLE);
             }else {
                 songAdapterViewHolder.itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.white ));

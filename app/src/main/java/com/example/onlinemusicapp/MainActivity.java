@@ -15,10 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.arges.sepan.argmusicplayer.Models.ArgAudio;
-import com.arges.sepan.argmusicplayer.Models.ArgAudioList;
-import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView;
 import com.example.onlinemusicapp.Adapter.JcSongsAdapter;
 import com.example.onlinemusicapp.Adapter.OnlineSongAdapter;
 import com.example.onlinemusicapp.Model.Getsongs;
@@ -41,13 +37,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     ProgressDialog progressDialog;
     private ArrayList<Getsongs> getsongs;
-
-    //JcPlayerView jcPlayerView;
-    //ArrayList<JcAudio> jcAudios = new ArrayList<>();
-
-    //ArgPlayerLargeView musicPlayer;
-    //ArrayList<ArgAudio> argaudios = new ArrayList<>();
-    //ArgAudioList myplaylist = new ArgAudioList(true);
     int currentindex;
     Boolean checkin = false;
     FerrisWheelView ferrisWheelView;
@@ -57,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
-
-        //jcPlayerView=findViewById(R.id.jcplayer);
-        //musicPlayer=findViewById(R.id.argmusicplayer);
+        //getSupportActionBar().hide();
 
         ferrisWheelView=findViewById(R.id.ferrisWheelView);
         recyclerView=findViewById(R.id.recyclerview_id);
@@ -73,24 +59,6 @@ public class MainActivity extends AppCompatActivity {
         ferrisWheelView.setClickable(false);
         //progressDialog.setMessage("please wait...");
         //progressDialog.show();
-        //recyclerView.setAdapter(jcSongsAdapter);
-//        jcSongsAdapter = new JcSongsAdapter(getApplicationContext(), getsongs, new JcSongsAdapter.RecyclerItemClickListener() {
-//            @Override
-//            public void onClickListener(Getsongs getsongs, int position) {
-//                changeselectedsong(position);
-//
-//                //jcplayer
-////                jcPlayerView.playAudio(jcAudios.get(position));
-////                jcPlayerView.setVisibility(View.VISIBLE);
-////                jcPlayerView.createNotification();
-//
-//                //argplayer
-////                musicPlayer.play(argaudios.get(position));
-////                musicPlayer.setVisibility(View.VISIBLE);
-////                musicPlayer.enableNotification(MainActivity.this);
-////                myplaylist.add(argaudios.get(position));
-//            }
-//        });
         recyclerView.setAdapter(onlineSongAdapter);
         onlineSongAdapter = new OnlineSongAdapter(getsongs,getApplicationContext());
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
@@ -105,15 +73,8 @@ public class MainActivity extends AppCompatActivity {
                     getsongs.add(gsongs);
                     checkin=true;
 
-                    //jcAudios.add(JcAudio.createFromURL(gsongs.getSongTitle(),gsongs.getSonglink()));
-
-                    //argaudios.add(ArgAudio.createFromURL(gsongs.getArtist(),gsongs.getSongTitle(),gsongs.getSonglink()));
-
                 }
                 recyclerView.setAdapter(onlineSongAdapter);
-//                jcSongsAdapter.setSelectedPosition(0);
-//                recyclerView.setAdapter(jcSongsAdapter);
-//                jcSongsAdapter.notifyDataSetChanged();
                 //progressDialog.dismiss();
                 ferrisWheelView.stopAnimation();
                 ferrisWheelView.setVisibility(View.GONE);
@@ -122,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 if (checkin){
-//                    jcPlayerView.initPlaylist(jcAudios,null);
-//                    musicPlayer.loadPlaylist(myplaylist);
+                    recyclerView.setAdapter(onlineSongAdapter);
                 }
                 else {
                     Toast.makeText(MainActivity.this, "there is no songs", Toast.LENGTH_LONG).show();
@@ -137,28 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 ferrisWheelView.setVisibility(View.GONE);
             }
         });
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                getsongs.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-//                {
-//                    Getsongs upload = dataSnapshot.getValue(Getsongs.class);
-//                    getsongs.add(upload);
-//                }
-//                jcSongsAdapter = new JcSongsAdapter(MainActivity.this,getsongs);
-//                recyclerView.setAdapter(jcSongsAdapter);
-//                jcSongsAdapter.notifyDataSetChanged();
-//                progressDialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                progressDialog.dismiss();
-//
-//            }
-//        });
 
         offlinebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,14 +106,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void changeselectedsong(int index){
-        jcSongsAdapter.notifyItemChanged(jcSongsAdapter.getSelectedPosition());
-        currentindex = index;
-        jcSongsAdapter.setSelectedPosition(currentindex);
-        jcSongsAdapter.notifyItemChanged(currentindex);
-
-    }
-
     boolean checkPermission(){
         int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
         if(result == PackageManager.PERMISSION_GRANTED){

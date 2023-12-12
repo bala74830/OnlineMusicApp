@@ -53,11 +53,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     //jcplayer
-    implementation 'com.github.jeancsanchez:JcPlayer:2.6.16'
-    implementation 'androidx.work:work-runtime:2.7.1'
+    //implementation 'com.github.jeancsanchez:JcPlayer:2.6.16'
+    //implementation 'androidx.work:work-runtime:2.7.1'
 
     //argplayer
-    implementation 'com.github.mergehez:ArgPlayer:v3.1'
+    //implementation 'com.github.mergehez:ArgPlayer:v3.1'
 
     //ferriswheel loader
     implementation 'ru.github.igla:ferriswheel:1.2'

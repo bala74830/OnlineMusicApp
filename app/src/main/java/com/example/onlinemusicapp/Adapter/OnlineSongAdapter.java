@@ -56,11 +56,13 @@ public class OnlineSongAdapter extends RecyclerView.Adapter<OnlineSongAdapter.So
         holder.tv_duration.setText(duration);
 
         if(MyMediaPlayer.currentIndex==position){
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context,com.example.jean.jcplayer.R.color.colorPrimary ));
+            holder.tv_title.setTextColor(Color.parseColor("#1DB954"));
+            holder.tv_artist.setTextColor(Color.parseColor("#1DB954"));
             holder.iv_play_active.setVisibility(View.VISIBLE);
         }else{
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.white ));
-            holder.iv_play_active.setVisibility(View.INVISIBLE);
+            holder.tv_title.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.tv_artist.setTextColor(Color.parseColor("#FFFFFF"));
+            holder.iv_play_active.setVisibility(View.VISIBLE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -31,7 +31,7 @@ public class OnlineMediaPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_media_player);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         titleTv = findViewById(R.id.song_titleol);
         currentTimeTv = findViewById(R.id.current_timeol);

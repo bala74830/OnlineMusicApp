@@ -2,32 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:padding="5dp"
-    android:focusable="true"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:id="@+id/song_layout"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/recyclerview_bg">
     
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:padding="3dp"
         android:layout_centerVertical="true"
         android:id="@+id/iv_artwork"
-        android:src="@drawable/headphones"/>
+        android:src="@drawable/headphonesvctr"/>
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_title"
         android:text="songs title"
-        android:textSize="16dp"
+        android:textSize="18dp"
+        android:layout_marginLeft="5dp"
+        android:padding="3dp"
         android:textStyle="bold"
-        android:paddingRight="50dp"
-        android:paddingLeft="50dp"
         android:layout_toRightOf="@+id/iv_artwork"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:layout_toEndOf="@+id/iv_artwork"/>
 
     <TextView
@@ -36,35 +39,44 @@
         android:layout_toRightOf="@+id/iv_artwork"
         android:layout_toEndOf="@+id/iv_artwork"
         android:text="Artist"
+        android:textSize="16sp"
+        android:layout_marginLeft="5dp"
+        android:padding="3dp"
         android:layout_below="@+id/tv_title"
         android:id="@+id/tv_artist"
-        android:textColor="#000000"/>
+        android:textColor="#FFFFFF"/>
 
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_toStartOf="@+id/tv_duration"
-       android:layout_marginEnd="20dp"
+       android:layout_marginEnd="10dp"
         android:id="@+id/downloadsong"
-        android:src="@drawable/downloadpng"/>
+        android:layout_centerVertical="true"
+        android:src="@drawable/downloadvctr"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
         android:id="@+id/tv_duration"
         android:text="3:05"
-        android:textColor="#000000"/>
+        android:textStyle="bold"
+        android:padding="3dp"
+        android:textColor="#FFFFFF"/>
     
     <ImageView
         android:id="@+id/play_active"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginRight="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/tv_duration"
-        android:src="@drawable/play"
-        android:visibility="invisible"/>
+        android:src="@drawable/ic_play"
+        android:padding="3dp"
+        android:visibility="visible"/>
 
 </RelativeLayout>

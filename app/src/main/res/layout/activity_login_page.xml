@@ -7,6 +7,19 @@
     android:background="@color/primarydark"
     tools:context=".Login.LoginPage">
 
+        <ru.github.igla.ferriswheel.FerrisWheelView
+            android:id="@+id/ferrisWheelView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:fwv_baseStrokeColor="#FFFFFF"
+            app:fwv_cabinFillColor="#1DB954"
+            app:fwv_cabinLineStrokeColor="#1DB954"
+            app:fwv_cabinsNumber="10"
+            app:fwv_rotateSpeed="30"
+            app:fwv_wheelStrokeColor="#FFFFFF"
+            android:visibility="gone"/>
+
 <!--    <com.airbnb.lottie.LottieAnimationView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
@@ -14,6 +27,8 @@
 <!--        app:lottie_rawRes="@raw/boxloader"-->
 <!--        app:lottie_autoPlay="false"-->
 <!--        android:visibility="gone"/>-->
+
+
 
     <TextView
         android:id="@+id/mail_text"
@@ -124,17 +139,5 @@
         android:text="Forgot password"
         android:textStyle="italic"
         android:textColor="#FFFFFF" />
-
-<!--    <Button-->
-<!--        android:id="@+id/register_text"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/login_btn"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:text="Register"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold" />-->
 
 </RelativeLayout>
