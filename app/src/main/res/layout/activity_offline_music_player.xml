@@ -19,6 +19,14 @@
         android:padding="20dp"
         android:layout_centerHorizontal="true"/>
 
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchbar"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search Here...."
+        android:layout_below="@+id/songs_text"
+        android:background="@drawable/recyclerview_bg"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
-        android:layout_below="@+id/songs_text"/>
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/searchbar"/>
 
 </RelativeLayout>

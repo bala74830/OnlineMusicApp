@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.onlinemusicapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MusicListAdapter extends  RecyclerView.Adapter<MusicListAdapter.ViewHolder>{
 
@@ -24,6 +25,11 @@ public class MusicListAdapter extends  RecyclerView.Adapter<MusicListAdapter.Vie
     public MusicListAdapter(ArrayList<AudioModel> songsList, Context context) {
         this.songsList = songsList;
         this.context = context;
+    }
+
+    public void setfilteredlist(ArrayList<AudioModel> filteredlist){
+        this.songsList = filteredlist;
+        notifyDataSetChanged();
     }
 
     @Override

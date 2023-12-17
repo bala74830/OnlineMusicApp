@@ -105,9 +105,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_pause">
+                android:src="@drawable/ic_pause"
+                android:visibility="gone">
 
             </ImageView>
+
+            <ProgressBar
+                android:id="@+id/playsongsprgrbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
 
         </RelativeLayout>
 

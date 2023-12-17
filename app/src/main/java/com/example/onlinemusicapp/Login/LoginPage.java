@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -16,6 +18,7 @@ import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +46,9 @@ public class LoginPage extends AppCompatActivity {
     TextView resetpass;
     String user;
     ImageButton eyetoggle;
-    boolean show =true;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
+    boolean show =true,firsttime=false;
     LottieAnimationView greendotloader;
     FerrisWheelView ferrisWheelView;
 
@@ -56,6 +61,8 @@ public class LoginPage extends AppCompatActivity {
 
 
         mauth=FirebaseAuth.getInstance();
+        settings = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        editor = settings.edit();
         mail=findViewById(R.id.login_mail);
         password=findViewById(R.id.login_password);
         login_btn=findViewById(R.id.login_btn);
@@ -64,6 +71,12 @@ public class LoginPage extends AppCompatActivity {
         eyetoggle=findViewById(R.id.password_toggle);
         ferrisWheelView=findViewById(R.id.ferrisWheelView2);
         //greendotloader=findViewById(R.id.greendotloader);
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.primarydark));
+        }
 
 
         eyetoggle.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +103,9 @@ public class LoginPage extends AppCompatActivity {
                 if (mail.getText().toString().equals("admin@gmail.com") && password.getText().toString().equals("admin123")){
                     Intent i=new Intent(LoginPage.this, MainActivity.class);
                     startActivity(i);
+                    firsttime=true;
+                    editor.putBoolean("ft",firsttime);
+                    editor.apply();
                     finishAffinity();
                 }
                 else {
@@ -170,6 +186,9 @@ public class LoginPage extends AppCompatActivity {
                         startActivity(new Intent(LoginPage.this,MainActivity.class));
                         ferrisWheelView.stopAnimation();
                         ferrisWheelView.setVisibility(View.GONE);
+                        firsttime=true;
+                        editor.putBoolean("ft",firsttime);
+                        editor.apply();
                         finishAffinity();
                     }
                     else

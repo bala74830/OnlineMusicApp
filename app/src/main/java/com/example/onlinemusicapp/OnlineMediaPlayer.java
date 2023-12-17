@@ -3,9 +3,14 @@ package com.example.onlinemusicapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -25,6 +30,7 @@ public class OnlineMediaPlayer extends AppCompatActivity {
     ImageView pausePlay,nextBtn,previousBtn,musicIcon;
     ArrayList<Getsongs> songsList;
     Getsongs currentSong;
+    ProgressBar progressBar;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     int x=0;
     @Override
@@ -32,6 +38,12 @@ public class OnlineMediaPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_media_player);
         //getSupportActionBar().hide();
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.colorAccent));
+        }
 
         titleTv = findViewById(R.id.song_titleol);
         currentTimeTv = findViewById(R.id.current_timeol);
@@ -41,6 +53,7 @@ public class OnlineMediaPlayer extends AppCompatActivity {
         nextBtn = findViewById(R.id.nextol);
         previousBtn = findViewById(R.id.previousol);
         musicIcon = findViewById(R.id.music_icon_bigol);
+        progressBar=findViewById(R.id.playsongsprgrbar);
 
         titleTv.setSelected(true);
         songsList = (ArrayList<Getsongs>) getIntent().getSerializableExtra("LIST");
@@ -88,6 +101,8 @@ public class OnlineMediaPlayer extends AppCompatActivity {
     }
 
     void setResourcesWithMusic(){
+        progressBar.setVisibility(View.VISIBLE);
+        pausePlay.setVisibility(View.GONE);
         currentSong = songsList.get(MyMediaPlayer.currentIndex);
 
         titleTv.setText(currentSong.getSongTitle());
@@ -113,6 +128,8 @@ public class OnlineMediaPlayer extends AppCompatActivity {
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    progressBar.setVisibility(View.GONE);
+                    pausePlay.setVisibility(View.VISIBLE);
                     mediaPlayer.start();
                 }
             });
@@ -121,7 +138,6 @@ public class OnlineMediaPlayer extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
