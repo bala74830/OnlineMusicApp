@@ -17,6 +17,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class OfflineMusicPlayer extends AppCompatActivity {
     TextView noMusicTextView;
     ArrayList<AudioModel> songsList = new ArrayList<>();
     SearchView searchView;
+    MusicListAdapter musicListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,9 @@ public class OfflineMusicPlayer extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         noMusicTextView = findViewById(R.id.no_songs_text);
         searchView = findViewById(R.id.searchbar);
-        searchView.setQueryHint(Html.fromHtml("<font color = #ffffff>"));
+        EditText searchEditText = (EditText) searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getResources().getColor(R.color.white));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.white));
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -81,13 +85,13 @@ public class OfflineMusicPlayer extends AppCompatActivity {
             if(new File(songData.getPath()).exists())
                 songsList.add(songData);
         }
-
+        musicListAdapter = new MusicListAdapter(songsList,getApplicationContext());
         if(songsList.size()==0){
             noMusicTextView.setVisibility(View.VISIBLE);
         }else{
             //recyclerview
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new MusicListAdapter(songsList,getApplicationContext()));
+            recyclerView.setAdapter(musicListAdapter);
         }
 
     }
@@ -102,7 +106,7 @@ public class OfflineMusicPlayer extends AppCompatActivity {
         if (filteredlist.isEmpty()){
             Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show();
         }else {
-            new MusicListAdapter(songsList,getApplicationContext()).setfilteredlist(filteredlist);
+            musicListAdapter.setfilteredlist(filteredlist);
         }
     }
 
@@ -126,7 +130,7 @@ public class OfflineMusicPlayer extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(recyclerView!=null){
-            recyclerView.setAdapter(new MusicListAdapter(songsList,getApplicationContext()));
+            recyclerView.setAdapter(musicListAdapter);
         }
     }
 }

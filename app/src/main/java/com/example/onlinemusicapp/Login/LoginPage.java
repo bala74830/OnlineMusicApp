@@ -60,104 +60,105 @@ public class LoginPage extends AppCompatActivity {
         //getSupportActionBar().hide();
 
 
-        mauth=FirebaseAuth.getInstance();
         settings = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         editor = settings.edit();
-        mail=findViewById(R.id.login_mail);
-        password=findViewById(R.id.login_password);
-        login_btn=findViewById(R.id.login_btn);
-        reg_text=findViewById(R.id.register_text);
-        resetpass=findViewById(R.id.forgetpass);
-        eyetoggle=findViewById(R.id.password_toggle);
-        ferrisWheelView=findViewById(R.id.ferrisWheelView2);
-        //greendotloader=findViewById(R.id.greendotloader);
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window window = this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(this.getResources().getColor(R.color.primarydark));
+
+        if (settings.getBoolean("ft", false)){
+            Intent i =new Intent(LoginPage.this,MainActivity.class);
+            startActivity(i);
         }
+        else {
 
-
-        eyetoggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(show)
-                {
-                    show=false;
-                    eyetoggle.setImageResource(R.drawable.ic_baseline_visibility_off_24);
-                    password.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                else
-                {
-                    show=true;
-                    eyetoggle.setImageResource(R.drawable.ic_baseline_visibility_24);
-                    password.setTransformationMethod(null);
-                }
+            mauth = FirebaseAuth.getInstance();
+            mail = findViewById(R.id.login_mail);
+            password = findViewById(R.id.login_password);
+            login_btn = findViewById(R.id.login_btn);
+            reg_text = findViewById(R.id.register_text);
+            resetpass = findViewById(R.id.forgetpass);
+            eyetoggle = findViewById(R.id.password_toggle);
+            ferrisWheelView = findViewById(R.id.ferrisWheelView2);
+            //greendotloader=findViewById(R.id.greendotloader);
+            if (Build.VERSION.SDK_INT >= 21) {
+                Window window = this.getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.setStatusBarColor(this.getResources().getColor(R.color.primarydark));
             }
-        });
 
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mail.getText().toString().equals("admin@gmail.com") && password.getText().toString().equals("admin123")){
-                    Intent i=new Intent(LoginPage.this, MainActivity.class);
-                    startActivity(i);
-                    firsttime=true;
-                    editor.putBoolean("ft",firsttime);
-                    editor.apply();
+
+            eyetoggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (show) {
+                        show = false;
+                        eyetoggle.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                        password.setTransformationMethod(new PasswordTransformationMethod());
+                    } else {
+                        show = true;
+                        eyetoggle.setImageResource(R.drawable.ic_baseline_visibility_24);
+                        password.setTransformationMethod(null);
+                    }
+                }
+            });
+
+            login_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mail.getText().toString().equals("admin@gmail.com") && password.getText().toString().equals("admin123")) {
+                        Intent i = new Intent(LoginPage.this, MainActivity.class);
+                        startActivity(i);
+                        firsttime = true;
+                        editor.putBoolean("ft", firsttime);
+                        editor.apply();
+                        finishAffinity();
+                    } else {
+                        login();
+                    }
+                }
+            });
+
+            reg_text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //greendotloader.setVisibility(View.VISIBLE);
+                    startActivity(new Intent(LoginPage.this, Registration.class));
+                    //greendotloader.setVisibility(View.GONE);
                     finishAffinity();
                 }
-                else {
-                    login();
-                }
-            }
-        });
+            });
 
-        reg_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //greendotloader.setVisibility(View.VISIBLE);
-                startActivity(new Intent(LoginPage.this,Registration.class));
-                //greendotloader.setVisibility(View.GONE);
-                finishAffinity();
-            }
-        });
+            resetpass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    user = mail.getText().toString().trim();
+                    if (!TextUtils.isEmpty(user)) {
+                        ResetPassword();
+                    } else {
+                        mail.setError("Email can not be empty..");
+                    }
+                }
+            });
 
-        resetpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user= mail.getText().toString().trim();
-                if (!TextUtils.isEmpty(user)){
-                    ResetPassword();
+            mail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        mail.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_focus_bg));
+                        password.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_bg));
+                    }
                 }
-                else {
-                    mail.setError("Email can not be empty..");
-                }
-            }
-        });
+            });
 
-        mail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                {
-                    mail.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.edit_text_focus_bg));
-                    password.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.edit_text_bg));
+            password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        password.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_focus_bg));
+                        mail.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.edit_text_bg));
+                    }
                 }
-            }
-        });
-
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
-                {
-                    password.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.edit_text_focus_bg));
-                    mail.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.edit_text_bg));
-                }
-            }
-        });
+            });
+        }
     }
 
     private void login() {

@@ -25,6 +25,7 @@ public class MusicListAdapter extends  RecyclerView.Adapter<MusicListAdapter.Vie
     public MusicListAdapter(ArrayList<AudioModel> songsList, Context context) {
         this.songsList = songsList;
         this.context = context;
+        notifyDataSetChanged();
     }
 
     public void setfilteredlist(ArrayList<AudioModel> filteredlist){
