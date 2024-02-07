@@ -6,11 +6,13 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.onlinemusicapp.R;
 
@@ -22,11 +24,12 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
     TextView titleTv,currentTimeTv,totalTimeTv;
     SeekBar seekBar;
-    ImageView pausePlay,nextBtn,previousBtn,musicIcon;
+    ImageView pausePlay,nextBtn,previousBtn,musicIcon,loopbtn;
     ArrayList<AudioModel> songsList;
     AudioModel currentSong;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     int x=0;
+    boolean isloop=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class MusicPlayerActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.next);
         previousBtn = findViewById(R.id.previous);
         musicIcon = findViewById(R.id.music_icon_big);
+        loopbtn=findViewById(R.id.loopbtn);
 
         titleTv.setSelected(true);
 
@@ -93,8 +97,6 @@ public class MusicPlayerActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     void setResourcesWithMusic(){
@@ -107,12 +109,28 @@ public class MusicPlayerActivity extends AppCompatActivity {
         pausePlay.setOnClickListener(v-> pausePlay());
         nextBtn.setOnClickListener(v-> playNextSong());
         previousBtn.setOnClickListener(v-> playPreviousSong());
-
+        loopbtn.setOnClickListener(v-> loopMusic());
         playMusic();
 
 
     }
 
+    private void loopMusic()
+    {
+        if (!isloop)
+        {
+            isloop=true;
+            loopbtn.setImageResource(R.drawable.ic_loop_2);
+            Toast.makeText(MusicPlayerActivity.this, "Loop is on", Toast.LENGTH_LONG).show();
+            mediaPlayer.setLooping(true);
+        }
+        else {
+            isloop=false;
+            loopbtn.setImageResource(R.drawable.ic_loop);
+            Toast.makeText(MusicPlayerActivity.this, "Loop is off", Toast.LENGTH_LONG).show();
+            mediaPlayer.setLooping(false);
+        }
+    }
 
     private void playMusic(){
 

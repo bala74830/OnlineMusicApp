@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.onlinemusicapp.Adapter.JcSongsAdapter;
 import com.example.onlinemusicapp.Adapter.OnlineSongAdapter;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private ArrayList<Getsongs> getsongs;
     int currentindex;
+    TextView songstext;
     Boolean checkin = false;
     FerrisWheelView ferrisWheelView;
     Button offlinebtn;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         ferrisWheelView=findViewById(R.id.ferrisWheelView);
         recyclerView=findViewById(R.id.recyclerview_id);
         offlinebtn=findViewById(R.id.offlinebtn);
+        songstext=findViewById(R.id.songs_text);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //progressDialog = new ProgressDialog(this);
         getsongs = new ArrayList<>();
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 //progressDialog.dismiss();
                 ferrisWheelView.stopAnimation();
                 ferrisWheelView.setVisibility(View.GONE);
+                offlinebtn.setVisibility(View.VISIBLE);
+                songstext.setVisibility(View.VISIBLE);
                 if(checkPermission() == false){
                     requestPermission();
                     return;
@@ -104,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 //progressDialog.dismiss();
                 ferrisWheelView.stopAnimation();
                 ferrisWheelView.setVisibility(View.GONE);
+                offlinebtn.setVisibility(View.VISIBLE);
+                songstext.setVisibility(View.VISIBLE);
             }
         });
 

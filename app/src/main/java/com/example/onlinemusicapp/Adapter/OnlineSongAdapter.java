@@ -1,10 +1,12 @@
 package com.example.onlinemusicapp.Adapter;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -40,6 +42,10 @@ public class OnlineSongAdapter extends RecyclerView.Adapter<OnlineSongAdapter.So
     Context context;
     StorageReference storageReference,mreference;
     int index;
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
+    String artst,titl;
+
 
     public OnlineSongAdapter(ArrayList<Getsongs> songsList, Context context) {
         this.songsList = songsList;
@@ -78,6 +84,14 @@ public class OnlineSongAdapter extends RecyclerView.Adapter<OnlineSongAdapter.So
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                settings = holder.itemView.getContext().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                editor = settings.edit();
+                artst= String.valueOf(holder.tv_artist.getText());
+                titl= String.valueOf(holder.tv_title.getText());
+                editor.putString("art",artst);
+                editor.apply();
+                editor.putString("tit",titl);
+                editor.apply();
                 MyMediaPlayer.getInstance().reset();
                 MyMediaPlayer.currentIndex = position;
                 index=position;

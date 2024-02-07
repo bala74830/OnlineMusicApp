@@ -59,15 +59,8 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
         //getSupportActionBar().hide();
 
-
         settings = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         editor = settings.edit();
-
-        if (settings.getBoolean("ft", false)){
-            Intent i =new Intent(LoginPage.this,MainActivity.class);
-            startActivity(i);
-        }
-        else {
 
             mauth = FirebaseAuth.getInstance();
             mail = findViewById(R.id.login_mail);
@@ -158,7 +151,6 @@ public class LoginPage extends AppCompatActivity {
                     }
                 }
             });
-        }
     }
 
     private void login() {

@@ -9,15 +9,18 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.onlinemusicapp.BottomSheet.BottomSheetFragment;
 import com.example.onlinemusicapp.Model.Getsongs;
 import com.example.onlinemusicapp.OfflineMusicPlayer.AudioModel;
 import com.example.onlinemusicapp.OfflineMusicPlayer.MusicPlayerActivity;
 import com.example.onlinemusicapp.OfflineMusicPlayer.MyMediaPlayer;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ public class OnlineMediaPlayer extends AppCompatActivity {
     ArrayList<Getsongs> songsList;
     Getsongs currentSong;
     ProgressBar progressBar;
+    Button bottomsheet;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
     int x=0;
     @Override
@@ -54,6 +58,7 @@ public class OnlineMediaPlayer extends AppCompatActivity {
         previousBtn = findViewById(R.id.previousol);
         musicIcon = findViewById(R.id.music_icon_bigol);
         progressBar=findViewById(R.id.playsongsprgrbar);
+        bottomsheet=findViewById(R.id.btnShowBottomSheet);
 
         titleTv.setSelected(true);
         songsList = (ArrayList<Getsongs>) getIntent().getSerializableExtra("LIST");
@@ -98,6 +103,15 @@ public class OnlineMediaPlayer extends AppCompatActivity {
 
             }
         });
+
+        bottomsheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+            }
+        });
+
     }
 
     void setResourcesWithMusic(){
@@ -120,7 +134,9 @@ public class OnlineMediaPlayer extends AppCompatActivity {
 
 
     private void playMusic(){
-
+        if (mediaPlayer == null) {
+            mediaPlayer = MyMediaPlayer.getInstance();
+        }
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(currentSong.getSonglink());
@@ -131,10 +147,11 @@ public class OnlineMediaPlayer extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     pausePlay.setVisibility(View.VISIBLE);
                     mediaPlayer.start();
+                    seekBar.setProgress(0);
+                    seekBar.setMax(mediaPlayer.getDuration());
                 }
             });
-            seekBar.setProgress(0);
-            seekBar.setMax(mediaPlayer.getDuration());
+
         } catch (IOException e) {
             e.printStackTrace();
         }

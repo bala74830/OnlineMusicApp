@@ -21,6 +21,18 @@
         app:fwv_wheelStrokeColor="#FFFFFF"
         android:visibility="gone"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ONLINE SONGS"
+        android:id="@+id/songs_text"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:padding="20dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +41,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="120dp"
         android:id="@+id/recyclerview_id"
+        android:layout_below="@+id/songs_text"
         />
 
 <!--    <ProgressBar-->
@@ -47,6 +60,7 @@
         android:layout_marginBottom="50dp"
         android:backgroundTint="@color/black"
         android:text="OFFLINE"
+        android:visibility="gone"
         android:textColor="@color/white"/>
 
 </RelativeLayout>
